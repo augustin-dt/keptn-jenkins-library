@@ -354,7 +354,7 @@ def keptnAddResourcesBase64String(base64String, remoteUri) {
         validResponseCodes: "100:404",
         ignoreSslErrors: true
 
-    echo "Response from upload resource ${file} to ${remoteUri}: " + addResourceResponse.content
+    echo "Response from upload resource ${base64String} to ${remoteUri}: " + addResourceResponse.content
 }
 
 /**
