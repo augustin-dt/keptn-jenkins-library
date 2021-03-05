@@ -357,8 +357,6 @@ def keptnAddResourcesBase64String(base64String, remoteUri) {
     echo "Response from upload resource ${file} to ${remoteUri}: " + addResourceResponse.content
 }
 
-LS0tCnNwZWNfdmVyc2lvbjogJzAuMS4wJwpkYXNoYm9hcmQ6IGFjNTk0YjkzLTU2ZmYtNGQ3MC04ZWE5LTNjYjA0NWYxMGFlOAo=
-
 /**
  * keptnAddProjectResources(['localfile1': remotelocation1,'localfile2': remotelocation, ...])
  * Allows you to upload one local file to the Keptn's internal repo on Project level
