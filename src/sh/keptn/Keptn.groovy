@@ -3,7 +3,6 @@ package sh.keptn
 import org.jenkinsci.plugins.plaincredentials.StringCredentials
 import com.cloudbees.plugins.credentials.CredentialsProvider
 import com.cloudbees.plugins.credentials.domains.DomainRequirement
-import java.time.ZoneOffset
 
 /**
  * Downloads a file from the given url and stores it in the local workspace
@@ -28,9 +27,8 @@ def getKeptnInitJsonFilename() {return "keptn.init.${BUILD_NUMBER}.json"}
 
 // added getNow() to easily switch between java.time.LocalDateTime.now() to Instant.now(). INstant.now() returns time in UTC where LocalDataTime returns local time without timezone. this leads to problems in case Jenkins Server and Keptn are in differnet timezones
 def getNow() {
-    // return java.time.LocalDateTime.now()
+    return java.time.LocalDateTime.now()
     //return java.time.Instant.now()
-    return java.time.LocalDateTime.now(ZoneOffset.UTC).toString()
 }
 
 String getKeptnApiToken() {
@@ -316,7 +314,7 @@ def keptnAddResources(file, remoteUri) {
         def localFile = readFile(file)
         print "loaded file ${file}"
         //perform base64 encoding
-        String localFileBase64Encoded = localFile.bytes.encodeBase64().toString()
+        String localFileBase64Encoded = Base64.getEncoder().encodeToString(localFile.bytes)
 
         //Update SLO in keptn
         def requestBody = """{
