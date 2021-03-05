@@ -337,6 +337,28 @@ def keptnAddResources(file, remoteUri) {
     }
 }
 
+def keptnAddResourcesBase64String(base64String, remoteUri) {
+    def keptnInit = keptnLoadFromInit([:])
+
+    //Update SLO in keptn
+    def requestBody = """{
+        "resources" : [{"resourceURI": "${remoteUri}","resourceContent": "${base64String}"}]
+    }"""
+
+    def addResourceResponse = httpRequest contentType: 'APPLICATION_JSON', 
+        customHeaders: [[maskValue: true, name: 'x-token', value: "${keptnInit['keptn_api_token']}"]], 
+        httpMode: 'POST', 
+        requestBody: requestBody, 
+        responseHandle: 'STRING', 
+        url: "${keptnInit['keptn_endpoint']}/configuration-service/v1/project/${keptnInit['project']}/stage/${keptnInit['stage']}/service/${keptnInit['service']}/resource", 
+        validResponseCodes: "100:404",
+        ignoreSslErrors: true
+
+    echo "Response from upload resource ${file} to ${remoteUri}: " + addResourceResponse.content
+}
+
+LS0tCnNwZWNfdmVyc2lvbjogJzAuMS4wJwpkYXNoYm9hcmQ6IGFjNTk0YjkzLTU2ZmYtNGQ3MC04ZWE5LTNjYjA0NWYxMGFlOAo=
+
 /**
  * keptnAddProjectResources(['localfile1': remotelocation1,'localfile2': remotelocation, ...])
  * Allows you to upload one local file to the Keptn's internal repo on Project level
